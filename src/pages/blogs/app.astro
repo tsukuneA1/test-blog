@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getBlogsByCategory } from '../../libs/microcms';
+
+const response = await getBlogsByCategory("app班");
+---
+<Layout title="アプリ班">
+  <main>
+    <h1>アプリ班の活動</h1>
+    {
+        response.contents.map((blog: any) => (
+          <li>
+            <a href={blog.id}>・{blog.title}</a>
+        </li>   
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getBlogsByCategory } from '../../libs/microcms';
+
+const response = await getBlogsByCategory("ハッカソン");
+---
+<Layout title="ハッカソン">
+  <main>
+    <h1>歴代のハッカソンの作品</h1>
+    <ul>
+      {response.contents.map((blog) => (
+        <li>
+          <a href={`/blogs/${blog.id}`}>・{blog.title}</a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Layout>
+<style>
+	body {
+    margin: 0;
+    padding: 0;
+    margin-top: 70px;
+  }
+
+  main {
+    margin: auto;
+    padding: auto;
+    max-width: 60ch;
+    border-radius: 5px;
+  }
+
+  h1 {
+    font-size: 60px;
+    color: black;
+    text-align: center;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+	text-align: center;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  a {
+	font-size: 20px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  a:hover {
+	background: rgb(179, 179, 239);
+  }
+</style>
+
