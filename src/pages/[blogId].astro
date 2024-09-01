@@ -1,14 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getBlogsByCategory, getBlogDetail } from "../libs/microcms";  
+import { getBlogsByCategory, getBlogDetail } from "../libs/microcms";  //作った関数を読み込む
 
-//↓自動的に記事が読み込まれるように
+//↓ブログ記事ごとの詳細ページをビルド時に静的に生成するため
 export async function getStaticPaths() {
-    const response = await getBlogsByCategory({ fields :["id"]})
+    const response = await getBlogsByCategory({ fields :["id"]}) //getBlogsByCategoryを呼び出し、すべてのブログ記事のidだけを取得する
     return response.contents.map((blog: any) => ({
         params: {
             blogId: blog.id,
-        }
+        } //すべてのブログ記事に対応するblogIdを含むオブジェクトがparamsとして返される。
     }))}
 
 // 現在のブログIDに基づいて詳細を取得

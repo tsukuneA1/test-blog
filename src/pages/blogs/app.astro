@@ -8,14 +8,14 @@ const response = await getBlogsByCategory("app");
   <main>
     <h1>アプリ班の活動</h1>
     <ul>
-      {response.contents && response.contents.length > 0 ? (
+      {response.contents && response.contents.length > 0 ? ( //ブログが存在するかどうか。一つでもある場合は下へ
         response.contents.map((blog: any) => (
           <li>
             <a href={`/blog/${blog.id}`}>・{blog.title}</a>
           </li>   
         ))
       ) : (
-        <li>No blogs found</li>
+        <li>ブログが見つかりません</li> //ない場合はこっちへ
       )}
     </ul>
   </main>
