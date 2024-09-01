@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import { getBlogs } from "../libs/microcms";
+import { getBlogsByCategory  } from "../libs/microcms";
 //↓microCMSを呼び出す
-const response = await getBlogs({ fields: ["id", "title"] }); 
+const response = await getBlogsByCategory ({ fields: ["id", "title"] }); 
 ---
 <!--親コンポーネントであるindex.astroで子であるLayoutコンポーネントを呼び出している。その時に同時にtitleプロパティにwinc_blogという値を指定している。
 ここで指定した"winc_blog"が、Astro.props(Astroオブジェクトのpropsというプロパティ)に一旦格納される。

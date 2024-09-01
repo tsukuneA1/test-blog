@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getBlogs, getBlogDetail } from "../libs/microcms";  
+import { getBlogsByCategory, getBlogDetail } from "../libs/microcms";  
 
 //↓自動的に記事が読み込まれるように
 export async function getStaticPaths() {
-    const response = await getBlogs({ fields :["id"]})
+    const response = await getBlogsByCategory({ fields :["id"]})
     return response.contents.map((blog: any) => ({
         params: {
             blogId: blog.id,
@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 const { blogId } = Astro.params;
 const blog = await getBlogDetail(blogId);
 ---
+<!--blogid.astroは特定のブログ記事を精製するためのテンプレート -->
 <Layout title={blog.title}>
   <main>
     <h1>{blog.title}</h1>

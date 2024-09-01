@@ -2,13 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import { getBlogsByCategory } from '../../libs/microcms';
 
-const response = await getBlogsByCategory("その他");
+const response = await getBlogsByCategory("other");
 ---
 <Layout title="活動外での遊び">
   <main>
     <h1>活動外での遊び</h1>
     <ul>
-      {response.contents.map((blog) => (
+      {response.contents.map((blog :any) => (
         <li>
           <a href={`/blogs/${blog.id}`}>・{blog.title}</a>
         </li>
