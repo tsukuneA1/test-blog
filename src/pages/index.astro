@@ -1,29 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import { getBlogsByCategory  } from "../libs/microcms";
-const response = await getBlogsByCategory ({ fields: ["id", "title"] }); 
+import { getCategories } from "../libs/microcms"; 
+
+const categories = await getCategories(); 
 ---
-<!--親コンポーネントであるindex.astroで子であるLayoutコンポーネントを呼び出している。その時に同時にtitleプロパティにwinc_blogという値を指定している。
-ここで指定した"winc_blog"が、Astro.props(Astroオブジェクトのpropsというプロパティ)に一旦格納される。
-その後、Astro.propsに保存された"winc_blog"は子コンポーネントであるLayout.astroで、
-const title = Astro.props;
-として呼び出している。↓-->
-<Layout title="winc_blog">
-	<main>
-	<!--ブログのひな形-->
-  <h1>Wincの活動ブログ</h1>
-  <ul>
-    <li><a href="/blogs/app">アプリ班</a></li>
-    <li><a href="/blogs/web">Web班</a></li>
-    <li><a href="/blogs/hackathon">歴代ハッカソンの作品</a></li>
-    <li><a href="/blogs/other">その他の活動(遊びとか)</a></li>
-  </ul>
-	</main>
+
+<Layout title="wincblog">
+  <main>
+    <h1>Wincの活動ブログ</h1>
+    <ul>
+      {categories.contents.map((category) => (
+        <li>
+          <a href={`/${category.id}`}>{category.name}</a>
+        </li>
+      ))}
+    </ul>
+  </main>
 </Layout>
-<!--デザインは適当です。決まり次第書き直したい。 -->
+
+
+<!-- styleは適当です。リキ君がデザイン等々よろしく -->
+
 <style>
-	body {
+  body {
     margin: 0;
     padding: 0;
     margin-top: 70px;
@@ -37,14 +36,13 @@ const title = Astro.props;
 
   h1 {
     font-size: 60px;
-    color: black;
     text-align: center;
   }
 
   ul {
     padding: 0;
     list-style-type: none;
-	  text-align: center;
+    text-align: center;
   }
 
   li {
@@ -52,16 +50,13 @@ const title = Astro.props;
   }
 
   a {
-	font-size: 20px;
+    font-size: 20px;
     color: black;
     text-decoration: none;
     font-weight: 600;
   }
 
   a:hover {
-	background: rgb(179, 179, 239);
+    background: rgb(179, 179, 239);
   }
 </style>
-
-
-
