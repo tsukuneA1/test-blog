@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// wordpressのAPIから記事を取得
+export async function getStaticPaths() {
+  const response = await fetch('http://test.local/wp-json/wp/v2/posts'); //受け取ったものをresoiseへ。　fetchは指定されたURLからデータを取得する命令
+  const posts = await response.json(); //responseで得たものをjsonに変換してpostsへ入れる
+
+  return posts.map((post :any) => ({
+    params: {
+      id: post.id.toString(),
+    }, // それぞれの投稿へのパスを作成
+  }));
+}
+
+const { id } = Astro.params;
+const blogResponse = await fetch(`http://test.local/wp-json/wp/v2/posts/${id}`);
+const blog = await blogResponse.json();
+---
+
+<Layout title={blog.title.rendered}>
+  <main>
+    <h1>{blog.title.rendered}</h1>
+    <p>Published on: {new Date(blog.date).toLocaleString()}</p>
+    <div set:html={blog.content.rendered}></div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1em;
+    max-width: 60ch;
+    background-color: white;
+  }
+  p {
+    font-size: 14px;
+    color: gray;
+  }
+</style>
+

@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const categoriesResponse = await fetch('http://test.local/wp-json/wp/v2/categories');
+  const categories = await categoriesResponse.json();
+
+  const paths = categories.map((category: any) => ({
+    params: { category: category.slug },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function get({ params }) {
+  const categoriesResponse = await fetch('http://test.local/wp-json/wp/v2/categories');
+  const categories = await categoriesResponse.json();
+
+  // Find the current category based on the slug
+  const currentCategory = categories.find((cat: any) => cat.slug === params.category);
+
+  // Fetch posts for the current category
+  const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${currentCategory.id}`);
+  const posts = await postsResponse.json();
+
+  // Return category name and posts as props
+  return { props: { category: currentCategory.name, posts } };
+}
+
+const { category, posts } = Astro.props;
+
+---
+<Layout>
+  <h1>{category}</h1>
+  <ul>
+    {posts.map(post => (
+      <li key={post.id}>{post.title.rendered}</li>
+    ))}
+  </ul>
+</Layout>
+
