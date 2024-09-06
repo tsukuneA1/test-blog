@@ -1,5 +1,7 @@
 # Astro Starter Kit: Basics
 
+⭐まだ動きません⭐
+
 ```sh
 npm create astro@latest -- --template basics
 ```
