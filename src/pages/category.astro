@@ -21,7 +21,7 @@ const posts = await response.json();
 
 <Layout title={category}>
   <main>
-    <h1>{category}</h1>
+    <h1>カテゴリー:{category}班</h1>
     <ul>
       {posts.length > 0 ? (
         posts.map((post :any) => (

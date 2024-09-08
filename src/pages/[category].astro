@@ -4,38 +4,101 @@ import Layout from "../layouts/Layout.astro";
 export async function getStaticPaths() {
   const categoriesResponse = await fetch('http://test.local/wp-json/wp/v2/categories');
   const categories = await categoriesResponse.json();
-
-  const paths = categories.map((category: any) => ({
-    params: { category: category.slug },
+  return categories.map((category: any) => ({
+    params: {
+      category: category.slug,
+      categoryAddress: category.name,
+      categoryId: category.id,
+    },
   }));
-
-  return { paths, fallback: false };
 }
 
-export async function get({ params }) {
-  const categoriesResponse = await fetch('http://test.local/wp-json/wp/v2/categories');
-  const categories = await categoriesResponse.json();
+const { category } = Astro.params;
 
-  // Find the current category based on the slug
-  const currentCategory = categories.find((cat: any) => cat.slug === params.category);
+export async function getStaticProps({ params }) {
+  const { categoryId } = params;
 
-  // Fetch posts for the current category
-  const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${currentCategory.id}`);
-  const posts = await postsResponse.json();
+  async function getPostIdsByCategoryId(categoryId) {
+    const categoryUrl = `http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`;
+    try {
+      const postsResponse = await fetch(categoryUrl);
+      const posts = await postsResponse.json();
 
-  // Return category name and posts as props
-  return { props: { category: currentCategory.name, posts } };
+      const postIds = posts.map(post => post.id);
+      const postTitles = posts.map(post => post.title.rendered);
+
+      return { postIds, postTitles };
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      return { postIds: [], postTitles: [] }; // try ブロックを使う場合、必ずエラーハンドリングのための catch ブロック、または後処理のための finally ブロックを追加する必要がある。これがないと、Expected "finally" but found "}"というエラーが出る。
+    }
+  }
+      /*
+    return postIds; 
+    return posttitles;
+    とすると、最初の return postIds が実行されると、その後の return posttitles は実行されないので動かない*/
+
+  const { postIds, postTitles } = await getPostIdsByCategoryId(categoryId);
+
+  return {
+    props: {
+      category: params.category,
+      postIds,
+      postTitles,
+    },
+  };
 }
-
-const { category, posts } = Astro.props;
 
 ---
-<Layout>
-  <h1>{category}</h1>
-  <ul>
-    {posts.map(post => (
-      <li key={post.id}>{post.title.rendered}</li>
-    ))}
-  </ul>
+
+<Layout title={category}>
+  <main>
+    <h1>カテゴリー: {category}班</h1>
+    <ul>
+      {postIds && postTitles && postIds.length > 0 ? (
+        postIds.map((postId, index) => (
+          <li key={postId}>
+            <a href={`http://test.local/wp-json/wp/v2/posts/${postId}`}>
+              {postTitles[index]}
+            </a>
+          </li>
+        ))
+      ) : (
+        <li>記事がありません</li>
+      )}
+    </ul>
+  </main>
 </Layout>
 
+
+
+<style>
+  main {
+    margin: auto;
+    padding: 1em;
+    max-width: 60ch;
+    background-color: white;
+  }
+  h1 {
+    font-size: 40px;
+    text-align: center;
+    color: black;
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+  }
+  li {
+    margin-bottom: 10px;
+  }
+  a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    background: rgb(179, 179, 239);
+  }
+</style>
