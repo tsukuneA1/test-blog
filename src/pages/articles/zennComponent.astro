@@ -1,0 +1,111 @@
+---
+import Image from "astro/components/Image.astro";
+import type { ZennPost } from "../../types";
+
+const props = Astro.props as ZennPost;
+
+const published = new Date(props.published_at);
+const updated = new Date(props.body_updated_at);
+---
+<style>
+    .top_container {
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 1%;
+        width: 98%;
+        border-radius: 10px;
+        display: flex;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    a {
+      position: relative;
+      text-decoration: none;
+      color: black; 
+    }
+
+    a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px; 
+      width: 100%;
+      height: 1px; 
+      background-color: black;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.2s ease-out;
+    }
+
+    a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    .emoji {
+        display: flex;
+        width: 80px;
+        height: 30px;
+        font-size: 50px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h3{
+        padding: 0;
+        margin:10px 0;
+    }
+
+    .rounded-circle {
+        border-radius: 50%; 
+        margin-right: 5px;
+    }
+
+    .marginY {
+        margin: 10px 0;
+    }
+</style>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body style="background-color: white;">
+        <div class="top_container">
+           <p class="emoji">{props.emoji}</p>
+            <div>
+                <a href=`https://zenn.dev${props.path}`>
+                    <h3>{props.title}</h3>
+                </a>
+                <div class="container marginY">
+                    <Image
+                        width={25}
+                        height={25}
+                        src={props.user.avatar_small_url}
+                        alt="avatar_img"
+                        class="rounded-circle"
+                    />
+                    {props.user.name}
+                </div>
+                <div class="container">
+                    {props.article_type}
+                </div>
+                <div class="container">
+                    {(`${published.getFullYear()}.${String(published.getMonth() + 1).padStart(2, '0')}.${String(published.getDate()).padStart(2, '0')}`)}
+                    {published.getTime() < updated.getTime()
+                        ? <div class="container" style="margin-left: 10px;">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"></path></svg>
+                            {(`${updated.getFullYear()}.${String(updated.getMonth() + 1).padStart(2, '0')}.${String(updated.getDate()).padStart(2, '0')}`)}
+                            </div>
+                        : <></>
+                    }
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
