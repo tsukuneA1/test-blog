@@ -1,15 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// 型定義を追加
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
 const response = await fetch('http://test.local/wp-json/wp/v2/categories');
-const categories = await response.json();
+const categories: Category[] = await response.json();
 ---
 
 <Layout title="wincblog">
   <main>
     <h1>カテゴリー一覧</h1>
     <ul>
-      {categories.map((category :any) => (
-        <li>
+      {categories.map((category) => (
+        <li key={category.id}>
           <a href={`/${category.slug}`}>{category.name}</a>
         </li>
       ))}

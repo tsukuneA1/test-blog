@@ -1,13 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const response = await fetch('http://test.local/wp-json/wp/v2/categories');
-const categories = await response.json();
+// 型定義を追加
+type Category = {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+};
 
+type Post = {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  date: string;
+};
+
+const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+const categories: Category[] = await response.json();
 
 export async function getStaticPaths() {
   const response = await fetch('http://test.local/wp-json/wp/v2/categories');
-  const categories = await response.json();
+  const categories: Category[] = await response.json();
 
   return categories.map((category) => ({
     params: {
@@ -20,20 +35,19 @@ const currentCategory = categories.find(cat => cat.slug === Astro.params.categor
 
 const categoryName = currentCategory ? currentCategory.name : '';
 const categoryDescription = currentCategory ? currentCategory.description : '';
-const categorylist = currentCategory ? currentCategory['wp:post_type'] : ''; 
-//currentCategory.wp:post_type のように、オブジェクトのプロパティ名にコロン (:) が含まれている場合、JavaScriptの通常のドット表記 (.) ではアクセスできません。このようなケースでは、ブラケット記法 ([]) を使ってアクセスする必要があります。
 const categoryId = currentCategory ? currentCategory.id : null;
-let posts = [];
 
-let postTitles = []; 
-let postIds = [];
-let postDate = [];
+let posts: Post[] = [];
+let postTitles: string[] = [];
+let postIds: number[] = [];
+let postDate: string[] = [];
 
 if (categoryId) {
   const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`);
-  const posts = await postsResponse.json();
-  postTitles = posts.map(post => post.title.rendered);  
-  postIds = posts.map(post => post.id);  
+  posts = await postsResponse.json();
+
+  postTitles = posts.map(post => post.title.rendered);
+  postIds = posts.map(post => post.id);
   postDate = posts.map(post => post.date);
 }
 
@@ -46,11 +60,11 @@ if (categoryId) {
 
     {postTitles.length > 0 ? (
       <ul>
-    {postTitles.map((postTitle, index) => (
-      <li key={index}>
-        <p class="date">投稿日時: {postDate[index].substring(0,4)}年{postDate[index].substring(5,7)}月{postDate[index].substring(8,10)}日</p>
-        <a href={`./${postIds[index]}`}>{postTitle}</a>
-      </li>
+        {postTitles.map((postTitle, index) => (
+          <li key={index}>
+            <p class="date">投稿日: {postDate[index].substring(0,4)}年{postDate[index].substring(5,7)}月{postDate[index].substring(8,10)}日</p>
+            <a href={`./${postIds[index]}`}>{postTitle}</a>
+          </li>
         ))}
       </ul>
     ) : (
@@ -58,8 +72,6 @@ if (categoryId) {
     )}
   </main>
 </Layout>
-
-
 
 <style>
   main {
