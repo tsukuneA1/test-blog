@@ -1,72 +1,61 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+const categories = await response.json();
+
+
 export async function getStaticPaths() {
-  const categoriesResponse = await fetch('http://test.local/wp-json/wp/v2/categories');
-  const categories = await categoriesResponse.json();
-  return categories.map((category: any) => ({
+  const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+  const categories = await response.json();
+
+  return categories.map((category) => ({
     params: {
       category: category.slug,
-      categoryAddress: category.name,
-      categoryId: category.id,
     },
   }));
 }
 
-const { category } = Astro.params;
+const currentCategory = categories.find(cat => cat.slug === Astro.params.category);
 
-export async function getStaticProps({ params }) {
-  const { categoryId } = params;
+const categoryName = currentCategory ? currentCategory.name : '';
+const categoryDescription = currentCategory ? currentCategory.description : '';
+const categorylist = currentCategory ? currentCategory['wp:post_type'] : ''; 
+//currentCategory.wp:post_type のように、オブジェクトのプロパティ名にコロン (:) が含まれている場合、JavaScriptの通常のドット表記 (.) ではアクセスできません。このようなケースでは、ブラケット記法 ([]) を使ってアクセスする必要があります。
+const categoryId = currentCategory ? currentCategory.id : null;
+let posts = [];
 
-  async function getPostIdsByCategoryId(categoryId) {
-    const categoryUrl = `http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`;
-    try {
-      const postsResponse = await fetch(categoryUrl);
-      const posts = await postsResponse.json();
+let postTitles = []; 
+let postIds = [];
+let postDate = [];
 
-      const postIds = posts.map(post => post.id);
-      const postTitles = posts.map(post => post.title.rendered);
-
-      return { postIds, postTitles };
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      return { postIds: [], postTitles: [] }; // try ブロックを使う場合、必ずエラーハンドリングのための catch ブロック、または後処理のための finally ブロックを追加する必要がある。これがないと、Expected "finally" but found "}"というエラーが出る。
-    }
-  }
-      /*
-    return postIds; 
-    return posttitles;
-    とすると、最初の return postIds が実行されると、その後の return posttitles は実行されないので動かない*/
-
-  const { postIds, postTitles } = await getPostIdsByCategoryId(categoryId);
-
-  return {
-    props: {
-      category: params.category,
-      postIds,
-      postTitles,
-    },
-  };
+if (categoryId) {
+  const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`);
+  const posts = await postsResponse.json();
+  postTitles = posts.map(post => post.title.rendered);  
+  postIds = posts.map(post => post.id);  
+  postDate = posts.map(post => post.date);
 }
 
 ---
 
-<Layout title={category}>
+<Layout title="wincblog">
   <main>
-    <h1>カテゴリー: {category}班</h1>
-    <ul>
-      {postIds && postTitles && postIds.length > 0 ? (
-        postIds.map((postId, index) => (
-          <li key={postId}>
-            <a href={`http://test.local/wp-json/wp/v2/posts/${postId}`}>
-              {postTitles[index]}
-            </a>
-          </li>
-        ))
-      ) : (
-        <li>記事がありません</li>
-      )}
-    </ul>
+    <h1>{categoryName}</h1>
+    <p>{categoryDescription}</p>
+
+    {postTitles.length > 0 ? (
+      <ul>
+    {postTitles.map((postTitle, index) => (
+      <li key={index}>
+        <p class="date">投稿日時: {postDate[index].substring(0,4)}年{postDate[index].substring(5,7)}月{postDate[index].substring(8,10)}日</p>
+        <a href={`./${postIds[index]}`}>{postTitle}</a>
+      </li>
+        ))}
+      </ul>
+    ) : (
+      <p>投稿がありません</p>
+    )}
   </main>
 </Layout>
 
@@ -76,11 +65,14 @@ export async function getStaticProps({ params }) {
   main {
     margin: auto;
     padding: 1em;
-    max-width: 60ch;
-    background-color: white;
   }
   h1 {
     font-size: 40px;
+    text-align: center;
+    color: black;
+  }
+  p {
+    font-size: 20px;
     text-align: center;
     color: black;
   }
@@ -101,4 +93,5 @@ export async function getStaticProps({ params }) {
   a:hover {
     background: rgb(179, 179, 239);
   }
+
 </style>

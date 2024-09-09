@@ -1,41 +1,71 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-// wordpressのAPIから記事を取得
 export async function getStaticPaths() {
-  const response = await fetch('http://test.local/wp-json/wp/v2/posts'); //受け取ったものをresoiseへ。　fetchは指定されたURLからデータを取得する命令
-  const posts = await response.json(); //responseで得たものをjsonに変換してpostsへ入れる
+  const response = await fetch('http://test.local/wp-json/wp/v2/posts');
+  const posts = await response.json();
 
-  return posts.map((post :any) => ({
+  return posts.map((post) => ({
     params: {
-      id: post.id.toString(),
-    }, // それぞれの投稿へのパスを作成
+      id: post.id.toString(), 
+    },
   }));
 }
 
-const { id } = Astro.params;
-const blogResponse = await fetch(`http://test.local/wp-json/wp/v2/posts/${id}`);
-const blog = await blogResponse.json();
+const postId = Astro.params.id;
+
+const response = await fetch(`http://test.local/wp-json/wp/v2/posts/${postId}`);
+const post = await response.json();
+
+const postTitle = post.title.rendered;
+const postContent = post.content.rendered;
+const postDate = post.date; 
 ---
 
-<Layout title={blog.title.rendered}>
+<Layout title={postTitle}>
   <main>
-    <h1>{blog.title.rendered}</h1>
-    <p>Published on: {new Date(blog.date).toLocaleString()}</p>
-    <div set:html={blog.content.rendered}></div>
+    <h1>{postTitle}</h1> 
+    <p>投稿日時:{postDate.substring(0,10)}</p>
+    <div set:html={postContent}></div> 
   </main>
 </Layout>
+
+
 
 <style>
   main {
     margin: auto;
     padding: 1em;
     max-width: 60ch;
-    background-color: white;
+    text-align: center;
+  }
+  h1 {
+    font-size: 40px;
+    text-align: center;
+    color: black;
   }
   p {
-    font-size: 14px;
-    color: gray;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+  }
+  li {
+    margin-bottom: 10px;
+  }
+  a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    background: rgb(179, 179, 239);
   }
 </style>
+
 
