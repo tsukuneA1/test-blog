@@ -1,0 +1,120 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// 型定義を追加
+type Category = {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+};
+
+type Post = {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  date: string;
+};
+
+const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+const categories: Category[] = await response.json();
+
+export async function getStaticPaths() {
+  const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+  const categories: Category[] = await response.json();
+
+  return categories.map((category) => ({
+    params: {
+      category: category.slug,
+    },
+  }));
+}
+
+const currentCategory = categories.find(cat => cat.slug === Astro.params.category);
+
+const categoryName = currentCategory ? currentCategory.name : '';
+const categoryDescription = currentCategory ? currentCategory.description : '';
+const categoryId = currentCategory ? currentCategory.id : null;
+
+let posts: Post[] = [];
+let postTitles: string[] = [];
+let postIds: number[] = [];
+let postDate: string[] = [];
+
+if (categoryId) {
+  const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`);
+  posts = await postsResponse.json();
+
+  postTitles = posts.map(post => post.title.rendered);
+  postIds = posts.map(post => post.id);
+  postDate = posts.map(post => post.date);
+}
+
+---
+
+<Layout title="wincblog">
+  <main>
+    <h1>{categoryName}</h1>
+    <p>{categoryDescription}</p>
+
+    {postTitles.length > 0 ? (
+      <ul>
+        {postTitles.map((postTitle, index) => (
+          <li key={index}>
+          <div class="blog">
+            <p class="date">投稿日: {postDate[index].substring(0,4)}年{postDate[index].substring(5,7)}月{postDate[index].substring(8,10)}日</p>
+            <a href={`./${postIds[index]}`}>{postTitle}</a>
+            <p>ブログ概要</p>
+          </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>投稿がありません</p>
+    )}
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1em;
+  }
+  h1 {
+    font-size: 40px;
+    text-align: center;
+    color: black;
+  }
+  p {
+    font-size: 20px;
+    text-align: center;
+    color: black;
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+  }
+  li {
+    margin-bottom: 10px;
+  }
+  a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  a:hover {
+    background: rgb(179, 179, 239);
+  }
+  .blog
+{
+  background-color: aqua;
+  width: 60ch;
+  margin:auto;
+}
+
+
+</style>

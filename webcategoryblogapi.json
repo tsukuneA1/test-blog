@@ -1,0 +1,89 @@
+[
+  {
+    "id": 16,
+    "date": "2024-09-03T08:30:52",
+    "date_gmt": "2024-09-03T08:30:52",
+    "guid": { "rendered": "http://test.local/?p=16" },
+    "modified": "2024-09-03T08:30:52",
+    "modified_gmt": "2024-09-03T08:30:52",
+    "slug": "n%e6%9c%88m%e6%97%a5",
+    "status": "publish",
+    "type": "post",
+    "link": "http://test.local/n%e6%9c%88m%e6%97%a5/",
+    "title": { "rendered": "n\u6708m\u65e5" },
+    "content": {
+      "rendered": "\n<p>\u4e00\u5e74\u751f\u5168\u54e1\u306efinal check\u304c\u7d42\u308f\u308a\u307e\u3057\u305f\uff01\uff01</p>\n\n\n\n<p></p>\n\n\n\n<p>\u6d3b\u52d5\u5185\u3067\u306e\u5199\u771f\u2192\u8cbc\u308b</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>\u4e00\u5e74\u751f\u5168\u54e1\u306efinal check\u304c\u7d42\u308f\u308a\u307e\u3057\u305f\uff01\uff01 \u6d3b\u52d5\u5185\u3067\u306e\u5199\u771f\u2192\u8cbc\u308b</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": { "footnotes": "" },
+    "categories": [1],
+    "tags": [],
+    "class_list": [
+      "post-16",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "hentry",
+      "category-web"
+    ],
+    "_links": {
+      "self": [{ "href": "http://test.local/wp-json/wp/v2/posts/16" }],
+      "collection": [{ "href": "http://test.local/wp-json/wp/v2/posts" }],
+      "about": [{ "href": "http://test.local/wp-json/wp/v2/types/post" }],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "http://test.local/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "http://test.local/wp-json/wp/v2/comments?post=16"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "http://test.local/wp-json/wp/v2/posts/16/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 17,
+          "href": "http://test.local/wp-json/wp/v2/posts/16/revisions/17"
+        }
+      ],
+      "wp:attachment": [
+        { "href": "http://test.local/wp-json/wp/v2/media?parent=16" }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "http://test.local/wp-json/wp/v2/categories?post=16"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "http://test.local/wp-json/wp/v2/tags?post=16"
+        }
+      ],
+      "curies": [
+        { "name": "wp", "href": "https://api.w.org/{rel}", "templated": true }
+      ]
+    }
+  }
+]

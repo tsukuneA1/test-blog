@@ -1,61 +1,56 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getCategories } from "../libs/microcms"; 
+import Layout from "../layouts/Layout.astro";
 
-const categories = await getCategories(); 
+// 型定義を追加
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+const response = await fetch('http://test.local/wp-json/wp/v2/categories');
+const categories: Category[] = await response.json();
 ---
 
 <Layout title="wincblog">
   <main>
-    <h1>Wincの活動ブログ</h1>
+    <h1>カテゴリー一覧</h1>
     <ul>
-      {categories.contents.map((category) => (
-        <li>
-          <a href={`/${category.id}`}>{category.name}</a>
+      {categories.map((category) => (
+        <li key={category.id}>
+          <a href={`/${category.slug}`}>{category.name}</a>
         </li>
       ))}
     </ul>
   </main>
 </Layout>
 
-
-<!-- styleは適当です。リキ君がデザイン等々よろしく -->
-
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    margin-top: 70px;
-  }
-
   main {
     margin: auto;
-    padding: auto;
+    padding: 1em;
     max-width: 60ch;
+    background-color: white;
   }
-
   h1 {
-    font-size: 60px;
+    font-size: 40px;
     text-align: center;
+    color: black;
   }
-
   ul {
     padding: 0;
     list-style-type: none;
     text-align: center;
   }
-
   li {
     margin-bottom: 10px;
   }
-
   a {
     font-size: 20px;
     color: black;
     text-decoration: none;
     font-weight: 600;
   }
-
   a:hover {
     background: rgb(179, 179, 239);
   }
