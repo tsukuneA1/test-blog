@@ -1,0 +1,190 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+	<a href="http://localhost:4321/"><img src="./wincicon.jpg" alt="homeに戻る"></a>
+    <div id="navArea">
+      <nav>
+        <div class="inner">
+          <ul>
+            <li><a href="/web">Web班</a></li>
+            <li><a href="/app">App班</a></li>
+            <li><a href="/competitive_programming">競技プログラミング班</a></li>
+            <li><a href="/hackathon">ハッカソンの作品</a></li>
+            <li><a href="/other">その他</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="toggle-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div id="mask"></div>
+      <main></main>
+    </div>
+
+    <script>
+      window.onload = function() {
+        let nav = document.querySelector("#navArea");
+        let btn = document.querySelector(".toggle-btn");
+        let mask = document.querySelector("#mask");
+
+        btn.onclick = () => {
+          nav.classList.toggle("open");
+        };
+		mask.onclick = () =>{
+			nav?.classList.toggle("open");
+		}
+      };
+    </script>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+  html {
+    font-family: system-ui, sans-serif;
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+  body {
+    font-weight: 400;
+  }
+  body a img{
+	height: 100px;
+	width: 100px;
+  }
+  main h1 {
+    font-weight: 400;
+    text-align: center;
+  }
+  nav {
+    display: block;
+    position: fixed;
+    top: 0;
+    background-color: #ffffff;
+    left: -300px;
+    bottom: 0;
+    transition: all 0.5s;
+    z-index: 3;
+    opacity: 0;
+    width: 220px;
+  }
+  .open nav {
+    left: 0;
+    opacity: 1;
+  }
+  nav .inner {
+    padding: 25px;
+  }
+  nav .inner ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav .inner ul li {
+    margin: 0;
+    border-bottom: 1px solid #333;
+  }
+  nav .inner ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    padding: 1rem;
+    transition-duration: 0.2s;
+  }
+  nav .inner ul li a:hover {
+    background-color: #e4e4e4;
+  }
+  .toggle-btn {
+    display: block;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .toggle-btn span {
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #333;
+    transition: all 0.5s;
+    border-radius: 4px;
+  }
+  .toggle-btn span:nth-child(1) {
+    top: 4px;
+  }
+  .toggle-btn span:nth-child(2) {
+    top: 25px;
+  }
+  .toggle-btn span:nth-child(3) {
+    bottom: 0px;
+  }
+  .open .toggle-btn span{
+	background-color: #fff;
+  }
+  .open .toggle-btn span:nth-child(1){
+	transform: translateY(22px) rotate(-315deg);
+  }
+  .open .toggle-btn span:nth-child(2){
+	opacity: 0;
+  }
+  .open .toggle-btn span:nth-child(3){
+	transform: translateY(-22px) rotate(315deg);
+  }
+  #mask {
+    display: none;
+    transform: all 0.5s;
+  }
+  .open #mask{
+	display: block;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	opacity: 0.8;
+	cursor: pointer;
+  }
+</style>
