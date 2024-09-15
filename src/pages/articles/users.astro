@@ -1,0 +1,80 @@
+---
+import Image from "astro/components/Image.astro";
+import { users } from "../../users";
+---
+
+<style>
+    .top_container {
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 2%;
+        width: auto;
+        border-radius: 10px;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
+    .emoji {
+        display: flex;
+        width: 80px;
+        height: 30px;
+        font-size: 50px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h3{
+        padding: 0;
+        margin:5px 0;
+    }
+
+    .rounded-circle {
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .marginY {
+        margin: 10px 0;
+    }
+</style>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <title>winc members</title>
+    <body style="background-color: rgb(23, 25, 35); margin: 0 3%">
+        <h1 style="text-align: center; color: white; margin: 15px 0;">Members</h1>
+        <div style="display: flex;">
+            {users.map((user) => (
+                <a href={`./user/${user.userName}`}>
+                <div class="top_container">
+                <div style="width:fit-content; background-color: #333;">
+                  <Image
+                    src={user.imgSrc}
+                    width={120}
+                    height={120}
+                    alt=""
+                  />
+                  <div>
+                    <h3>{user.userName}</h3>
+                    <p>{user.introduction}</p>
+                  </div>
+                </div>
+              </div>
+                </a>
+            ))}
+          </div>
+          
+        
+    </body>
+</html>

@@ -56,3 +56,20 @@ export type ZennPost = {
     };
     publication: any;
   };
+
+export type Article = {
+  user: User;
+  title: string;
+  articleUrl: string;
+  published_at: string;
+  updated_at: string;
+  classification: string;
+}
+
+export type User = {
+  userName: string;
+  imgSrc: string;
+  introduction: string;
+  zennId: string;
+  qiitaId: string;
+}
