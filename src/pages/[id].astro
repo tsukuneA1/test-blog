@@ -24,7 +24,6 @@ export async function getStaticPaths() {
 }
 
 const postId = Astro.params.id;
-
 const response = await fetch(`http://test.local/wp-json/wp/v2/posts/${postId}`);
 const post: Post = await response.json();
 
@@ -40,6 +39,29 @@ const postDate = post.date;
     <p>投稿日: {postDate.substring(0,4)}年{postDate.substring(5,7)}月{postDate.substring(8,10)}日</p>
     <div set:html={postContent}></div>
   </main>
+
+  <script>
+    // 画像のサイズを調整する関数
+    const adjustImageSize = () => {
+      const images = document.querySelectorAll('img');
+      images.forEach((img) => {
+        const width = window.innerWidth;
+        if (width < 768) {
+          img.style.width = '100%';
+          img.style.height = 'auto';
+        } else {
+          img.style.width = '80%';
+          img.style.height = 'auto';
+        }
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
+      });
+    };
+
+    // ページ読み込み時とリサイズ時に画像のサイズを調整
+    window.addEventListener('DOMContentLoaded', adjustImageSize);
+    window.addEventListener('resize', adjustImageSize);
+  </script>
 </Layout>
 
 <style>
@@ -59,6 +81,12 @@ const postDate = post.date;
     text-align: center;
     color: black;
   }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
   ul {
     padding: 0;
     list-style-type: none;
@@ -77,5 +105,3 @@ const postDate = post.date;
     background: rgb(179, 179, 239);
   }
 </style>
-
-

@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 // 型定義を追加
 type Category = {
   id: number;
@@ -16,6 +15,12 @@ type Post = {
   };
   date: string;
 };
+
+type Media = {
+  id: number;
+  source_url: string;
+};
+
 
 const response = await fetch('http://test.local/wp-json/wp/v2/categories');
 const categories: Category[] = await response.json();
@@ -40,7 +45,8 @@ const categoryId = currentCategory ? currentCategory.id : null;
 let posts: Post[] = [];
 let postTitles: string[] = [];
 let postIds: number[] = [];
-let postDate: string[] = [];
+let postDates: string[] = [];
+let postImages: string[] = [];
 
 if (categoryId) {
   const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`);
@@ -48,9 +54,8 @@ if (categoryId) {
 
   postTitles = posts.map(post => post.title.rendered);
   postIds = posts.map(post => post.id);
-  postDate = posts.map(post => post.date);
+  postDates = posts.map(post => post.date);
 }
-
 ---
 
 <Layout title="wincblog">
@@ -60,15 +65,25 @@ if (categoryId) {
 
     {postTitles.length > 0 ? (
       <ul>
-        {postTitles.map((postTitle, index) => (
-          <li key={index}>
-          <div class="blog">
-            <p class="date">投稿日: {postDate[index].substring(0,4)}年{postDate[index].substring(5,7)}月{postDate[index].substring(8,10)}日</p>
-            <a href={`./${postIds[index]}`}>{postTitle}</a>
-            <p>ブログ概要</p>
-          </div>
-          </li>
-        ))}
+        {postTitles.map((postTitle, index) => {
+          const year = postDates[index].substring(0, 4);
+          const month = postDates[index].substring(5, 7);
+          const date = postDates[index].substring(8, 10);
+          const postId = postIds[index];
+          return (
+            <li key={index}>
+              <div class="blog">
+                <div class="picture">
+                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}-1024x768.jpg`} alt={postTitle} class="post-image" />
+                </div>
+                <div class="post">
+                  <a href={`./${postIds[index]}`}>{postTitle}</a>
+                  <p class="date">投稿日: {year}年{month}月{date}日</p>
+                </div>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     ) : (
       <p>投稿がありません</p>
@@ -77,44 +92,79 @@ if (categoryId) {
 </Layout>
 
 <style>
+  h1{
+    color: #0E3E81;
+    font-family: "Zen Kurenaido";
+    font-size: 128px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .post-image {
+    max-width: 100%; 
+    height: 200px; 
+    width: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .blog {
+    margin-bottom: 20px; 
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
   main {
     margin: auto;
     padding: 1em;
-  }
-  h1 {
-    font-size: 40px;
+    max-width: 80%;
     text-align: center;
-    color: black;
-  }
-  p {
-    font-size: 20px;
-    text-align: center;
-    color: black;
   }
   ul {
     padding: 0;
     list-style-type: none;
-    text-align: center;
   }
+
   li {
     margin-bottom: 10px;
   }
+
   a {
-    font-size: 20px;
-    color: black;
+    color: #232428;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 6.4px;
     text-decoration: none;
-    font-weight: 600;
-    vertical-align: middle;
   }
+
+  p{
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 3.2px;
+  }
+
   a:hover {
     background: rgb(179, 179, 239);
   }
-  .blog
-{
-  background-color: aqua;
-  width: 60ch;
-  margin:auto;
-}
-
-
+  .post{
+    width: 759px;
+    height: 200px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    background: #FFF;
+  }
+  .picture{
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    background: #FFF;
+  }
 </style>
