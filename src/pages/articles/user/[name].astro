@@ -1,0 +1,44 @@
+---
+import Image from "astro/components/Image.astro";
+import type { Article } from "../../../types";
+import { fetchAllArticles } from "../article.astro";
+import { users } from "../../../users";
+import ArticleComponent from "../articleComponent.astro";
+
+export async function getStaticPaths() {
+  return users.map((user) => ({
+    params: { name: user.userName },
+  }));
+}
+
+const { name } = Astro.params;
+
+const props = users.filter((user) => user.userName === name)[0];
+
+const allArticles: Article[] = ((await fetchAllArticles(props, import.meta.env.QIITA_TOKEN)).flat()).sort((a, b) => {
+  return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
+})
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <Image
+      width={40}
+      height={40}
+      src={props.imgSrc}
+      alt={`${props.userName}画像`}
+    />
+    <h1>{props.userName}</h1>
+    <p>{props.introduction}</p>
+
+    <section>
+      <h2>Articles</h2>
+      {allArticles.map((article) => (
+        <ArticleComponent {...article}/>
+      ))}
+    </section>
+  </body>
+</html>
