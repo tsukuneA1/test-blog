@@ -1,0 +1,93 @@
+<div class="carousel">
+    <figure>
+      <img src="/web/picture1.jpg" alt="">
+      <img src="/web/picture2.jpg" alt="">
+      <img src="/web/picture3.jpg" alt="">
+      <img src="/web/picture4.jpg" alt="">
+      <img src="/web/picture5.jpg" alt="">
+    </figure>
+  </div>
+  <script>
+    const carousel = document.querySelector('.carousel figure');
+    let currentAngle = 0;
+    const rotationStep = 72; 
+    const totalImages = 5; 
+  
+    document.addEventListener('click', (e) => {
+      const viewportWidth = window.innerWidth;
+  
+      if (e.clientX < viewportWidth / 2) {
+        // 画面の左半分をクリックしたとき
+        currentAngle += rotationStep; // 左に回転
+      } else {
+        // 画面の右半分をクリックしたとき
+        currentAngle -= rotationStep; // 右に回転
+      }
+  
+      // 回転を適用し、連続してクリックしても続けて回転するようにする
+      carousel.style.transform = `rotateY(${currentAngle}deg)`;
+    });
+  
+  </script>
+
+  <style>
+    .zen-kurenaido-regular {
+  font-family: "Zen Kurenaido", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.carousel {
+  padding: 20px;
+  perspective: 800px; 
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel > * {
+  flex: 0 0 auto;
+}
+
+.carousel figure {
+  margin: 0;
+  width: 400px; /* Image width */
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  transform-origin: 50% 50% -482.84px; /* Apothem */
+}
+
+.carousel img {
+  width: 130%;
+  box-sizing: border-box;
+  padding: 0 40px; 
+}
+
+.carousel img:not(:first-of-type) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 50% -482.84px;
+}
+
+/* Rotating images based on their positions */
+.carousel img:nth-child(2) {
+  transform: rotateY(1.256rad); 
+}
+
+.carousel img:nth-child(3) {
+  transform: rotateY(2.512rad); 
+}
+
+.carousel img:nth-child(4) {
+  transform: rotateY(3.768rad); 
+}
+
+.carousel img:nth-child(5) {
+  transform: rotateY(5.024rad); 
+}
+
+</style>
+
+  </style>
