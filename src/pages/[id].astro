@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import HamburgerMenu from "../components/Header/header.astro";
 
 type Post = {
   id: number;
@@ -41,7 +42,6 @@ const postDate = post.date;
   </main>
 
   <script>
-    // 画像のサイズを調整する関数
     const adjustImageSize = () => {
       const images = document.querySelectorAll('img');
       images.forEach((img) => {

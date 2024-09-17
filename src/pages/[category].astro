@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// 型定義を追加
 type Category = {
   id: number;
   name: string;
@@ -14,11 +13,10 @@ type Post = {
     rendered: string;
   };
   date: string;
-};
-
-type Media = {
-  id: number;
-  source_url: string;
+  featured_media: number;
+  content: {
+    rendered: string;
+  };
 };
 
 
@@ -46,7 +44,7 @@ let posts: Post[] = [];
 let postTitles: string[] = [];
 let postIds: number[] = [];
 let postDates: string[] = [];
-let postImages: string[] = [];
+
 
 if (categoryId) {
   const postsResponse = await fetch(`http://test.local/wp-json/wp/v2/posts?categories=${categoryId}`);
@@ -55,13 +53,13 @@ if (categoryId) {
   postTitles = posts.map(post => post.title.rendered);
   postIds = posts.map(post => post.id);
   postDates = posts.map(post => post.date);
+
 }
 ---
 
 <Layout title="wincblog">
   <main>
     <h1>{categoryName}</h1>
-    <p>{categoryDescription}</p>
 
     {postTitles.length > 0 ? (
       <ul>
@@ -70,15 +68,24 @@ if (categoryId) {
           const month = postDates[index].substring(5, 7);
           const date = postDates[index].substring(8, 10);
           const postId = postIds[index];
+          const content = posts[index].content.rendered.substring(4, 26);
+        
+
           return (
             <li key={index}>
               <div class="blog">
                 <div class="picture">
-                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}-1024x768.jpg`} alt={postTitle} class="post-image" />
+                  <a href={`./${postIds[index]}`}>
+                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image"/>
+                  </a>
                 </div>
                 <div class="post">
-                  <a href={`./${postIds[index]}`}>{postTitle}</a>
+                  <a href={`./${postIds[index]}`} class="title">{postTitle}</a>
                   <p class="date">投稿日: {year}年{month}月{date}日</p>
+                  <div class="ex">
+                  <p class="explanation">{content}・・・</p>
+                  <a href={`./${postIds[index]}`} class="tsuzuki">続きはこちら</a>
+                  </div>
                 </div>
               </div>
             </li>
@@ -100,12 +107,12 @@ if (categoryId) {
     font-weight: 400;
     line-height: normal;
   }
+
   .post-image {
-    max-width: 100%; 
-    height: 200px; 
     width: 200px;
+    height: 200px;
+    flex-shrink: 0;
     object-fit: cover;
-    display: block;
   }
 
   .blog {
@@ -116,11 +123,11 @@ if (categoryId) {
   }
 
   main {
-    margin: auto;
-    padding: 1em;
+    margin:auto;
     max-width: 80%;
     text-align: center;
   }
+
   ul {
     padding: 0;
     list-style-type: none;
@@ -130,7 +137,7 @@ if (categoryId) {
     margin-bottom: 10px;
   }
 
-  a {
+  .title {
     color: #232428;
     font-size: 32px;
     font-style: normal;
@@ -167,4 +174,9 @@ if (categoryId) {
     border: 1px solid #000;
     background: #FFF;
   }
+  .zen-kurenaido-regular {
+  font-family: "Zen Kurenaido", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 </style>
