@@ -1,4 +1,5 @@
 ---
+import { useState } from "react";
 import type { Article } from "../../types";
 import Image from "astro/components/Image.astro";
 const props = Astro.props as Article;
@@ -14,7 +15,7 @@ const updated = new Date(props.updated_at);
         background-color: #3f3f46;
         color: white;
         padding: 20px;
-        width: 25rem; 
+        width: 100%; 
     }
 
     .flex {
@@ -35,6 +36,7 @@ const updated = new Date(props.updated_at);
 
     .text-lg {
         font-size: 1.125rem; /* text-lg */
+        color: white;
     }
 
     .text-xl {
@@ -47,7 +49,7 @@ const updated = new Date(props.updated_at);
     }
 
     .h-20 {
-        height: 5rem; /* h-20 */
+        height: 7rem; /* h-20 */
     }
 
     .inline-block {
@@ -55,11 +57,11 @@ const updated = new Date(props.updated_at);
     }
 
     .mr-2 {
-        margin-right: 0.5rem; /* mr-2 */
+        margin-right: 0.5rem;
     }
 
     .text-zinc-400 {
-        color: #a1a1aa; /* text-zinc-400 */
+        color: #a1a1aa; 
     }
 
     .container {
@@ -81,8 +83,15 @@ const updated = new Date(props.updated_at);
 
     .items-center {
         display: flex;
-        align-items: center; /* items-center */
+        align-items: flex-end; /* items-center */
+        justify-items: end;
+        margin-bottom:auto;
     }
+
+    h1 {
+        color:white;
+    }
+    
 </style>
 
 <html>
@@ -92,13 +101,16 @@ const updated = new Date(props.updated_at);
     <body>
         <div class="top_container">
             <div class="flex">
-                <Image
+                <a href={(`/articles/user/${props.user.userName}`)}>
+                    <Image
                     src={props.user.imgSrc}
-                    width={40}
-                    height={40}
+                    width={50}
+                    height={50}
                     alt=""
                     class="rounded-md"
                 />
+            </a>
+                
                 <div class="block ml-2">
                     <a class="text-lg" href={(`/articles/user/${props.user.userName}`)}>
                         {props.user.userName}
@@ -134,7 +146,6 @@ const updated = new Date(props.updated_at);
                 </div>
                 
             </div>
-            
         </div>
         
     </body>
