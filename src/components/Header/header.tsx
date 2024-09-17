@@ -3,7 +3,7 @@ import HamburgerMenu from "./HamburgerMenu";
 
 const RetWindowWidth = () => {
 
-    const [windowWidth, setWindowWidth] = useState(0);
+const [windowWidth, setWindowWidth] = useState(0);
 
 useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -17,29 +17,30 @@ useEffect(() => {
     return () => window.removeEventListener('resize', handleResize);
 }, []);
 
-    const imgWidth = windowWidth < 768 ? '137' : '275';
-    const imgHeight = windowWidth < 768 ? '34' : '69';
+    const imgWidth = windowWidth < 768 ? '137' : '183';
+    const imgHeight = windowWidth < 768 ? '34' : '46';
+    const padding = windowWidth < 768 ? '6px 20px' : '8px 30px';
     return (
     <html>
         <head>
             <meta charSet="UTF-8"/>
         </head>
         <body>
-        <div className="justify-between w-full" style={{display:"flex", backgroundColor:"white", padding: "20px", justifyContent: "space-between"}}>
+        <div className="justify-between w-full" style={{display:"flex", backgroundColor:"white", padding: `${padding}`, justifyContent: "space-between"}}>
             <div style={{display: 'flex'}}>
                 <div>
                     <a href="/">
                         <img
                         src='/logo.png'
-                        width={windowWidth < 768 ? 167 :334}
-                        height={windowWidth < 768 ? 42 : 85}
+                        width={windowWidth < 768 ? 167 :223}
+                        height={windowWidth < 768 ? 42 : 57}
                         alt='header'
                     />  
                     </a>
                        
                 </div>
                 
-                <div style={{margin:`0 ${windowWidth < 768 ? '10px' : '20px'}`}}>
+                <div style={{margin:`0 ${windowWidth < 768 ? '10px' : '20px'}`, display: 'flex', alignItems: "center"}}>
                     <svg width={imgWidth} height={imgHeight} viewBox="0 0 275 69" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_i_133_242)">
                         <path d="M31.7642 9.37037C31.7642 4.19526 35.7705 0 40.7126 0H266.052C270.994 0 275 4.19526 275 9.37037V59.6296C275 64.8047 270.994 69 266.052 69H40.7126C35.7705 69 31.7642 64.8047 31.7642 59.6296V9.37037Z" fill="#C2FEF0"/>

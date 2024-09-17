@@ -3,8 +3,8 @@
   }
   .hamburger {
     cursor: pointer;
-    width: 50px;
-    height: 40px;
+    width: 40px;
+    height: 32px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
