@@ -13,7 +13,6 @@ const categories: Category[] = await response.json();
 
 <Layout title="wincblog">
   <main>
-    <h1>カテゴリー一覧</h1>
     <ul>
       {categories.map((category) => (
         <li key={category.id}>

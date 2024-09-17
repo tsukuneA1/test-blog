@@ -54,6 +54,7 @@ if (categoryId) {
   postTitles = posts.map(post => post.title.rendered);
   postIds = posts.map(post => post.id);
   postDates = posts.map(post => post.date);
+  const postContent = posts.map(post => post.content.rendered);
 
 }
 ---
@@ -61,7 +62,6 @@ if (categoryId) {
 <Layout title="wincblog">
   <main>
     <h1>{categoryName}</h1>
-    <p>{categoryDescription}</p>
 
     {postTitles.length > 0 ? (
       <ul>
@@ -70,15 +70,18 @@ if (categoryId) {
           const month = postDates[index].substring(5, 7);
           const date = postDates[index].substring(8, 10);
           const postId = postIds[index];
+        
+
           return (
             <li key={index}>
               <div class="blog">
                 <div class="picture">
-                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}-1024x768.jpg`} alt={postTitle} class="post-image" />
+                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image" />
                 </div>
                 <div class="post">
                   <a href={`./${postIds[index]}`}>{postTitle}</a>
                   <p class="date">投稿日: {year}年{month}月{date}日</p>
+                  <p class="explanation"></p>
                 </div>
               </div>
             </li>
@@ -168,4 +171,10 @@ if (categoryId) {
     border: 1px solid #000;
     background: #FFF;
   }
+  .zen-kurenaido-regular {
+  font-family: "Zen Kurenaido", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 </style>
