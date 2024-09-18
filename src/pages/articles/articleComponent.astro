@@ -1,5 +1,4 @@
 ---
-import { useState } from "react";
 import type { Article } from "../../types";
 import Image from "astro/components/Image.astro";
 const props = Astro.props as Article;
@@ -83,13 +82,16 @@ const updated = new Date(props.updated_at);
 
     .items-center {
         display: flex;
-        align-items: flex-end; /* items-center */
+        align-items: flex-end; 
         justify-items: end;
         margin-bottom:auto;
     }
 
     h1 {
         color:white;
+        text-decoration: none;
+        border:none;
+        text-align: start;
     }
     
 </style>
