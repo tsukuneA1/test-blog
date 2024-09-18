@@ -26,53 +26,53 @@ const categories: Category[] = await response.json();
   <img src="./LINE_ALBUM_春合宿写真_240229_119 2.png" alt="" class="pixture2">
  </div>
   <main>
-    <div class="category">
+    <div class="category one">
       <div class="text">
         <h1 class="number">01</h1>
         <div class="left">
-        <h3></h3>
+          <h3></h3>
           <a href="./web" class="team_name">Web team</a>
         </div>
       </div>
       <img src="./web.png" alt="" class="right_one">
     </div>
 
-    <div class="category">
+    <div class="category two">
       <div class="text">
         <h1 class="number">02</h1>
-        <div class="Pseudo-elements">
-        <h3></h3>
-        <a href="./app" class="team_name">App team</a>
+        <div class="right">
+          <h3></h3>
+          <a href="./app" class="team_name">App team</a>
         </div>
       </div>
       <img src="./app.png" alt="" class="right_one">
     </div>
 
-    <div class="category">
+    <div class="category three">
       <div class="text">
-      <h1 class="number">03</h1>
-      <div class="left">
-      <h3></h3>
-      <a href="./competitive_programming" class="team_name">競プロ班</a>
-      </div>
+        <h1 class="number">03</h1>
+        <div class="left">
+          <h3></h3>
+          <a href="./competitive_programming" class="team_name">競プロ班</a>
+        </div>
       </div>
       <img src="./competitive.png" alt="" class="right_one">
     </div>
 
-    <div class="category">
+    <div class="category four">
       <div class="text">
-      <h1 class="number">04</h1>
-      <div class="Pseudo-elements">
-      <h3></h3>
-      <a href="./hackathon"class="team_name">hackathonの作品</a>
-      </div>
+        <h1 class="number">04</h1>
+        <div class="right">
+          <h3></h3>
+          <a href="./hackathon"class="team_name">hackathonの作品</a>
+        </div>
       </div>
       <img src="./hackathon.png" alt="" class="right_one">
     </div>
 
 
 
-    <div class="category">
+    <div class="category five">
       <div class="text">
       <h1 class="number">05</h1>
       <div class="left">
@@ -82,6 +82,9 @@ const categories: Category[] = await response.json();
       </div>
       <img src="./other.png" alt="" class="right_one">
     </div>
+    <footer>
+      <p>© 2024 Copyright: <span><a>コンピュータ研究会・WINC</a></span></p>
+    </footer>
   </main>
 </Layout>
 
@@ -104,17 +107,14 @@ const categories: Category[] = await response.json();
     text-decoration: none;
     font-weight: 600;
   }
-  a:hover {
-    background: rgb(179, 179, 239);
-  }
 
   
-</style>
+
 
  .content_width {
   max-width: 80%;
   margin: 0 auto;
-}
+  }
 
 .main {
   width: 100%;
@@ -153,6 +153,13 @@ h2 {
   margin-top: 260px;
   margin-left: 0px;
 }
+
+/* h2::before {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: absolute;
+} */
 
 .explanation {
   color: #000;
@@ -216,6 +223,14 @@ p {
   line-height: normal;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 650px;
+}
+
+
 .right_one {
   padding-left: 150px;
   margin-top: 44px;
@@ -239,6 +254,106 @@ p {
   margin: 0 auto;
   padding: 20px 20px 20px 0px;
   box-sizing: border-box;
+}
+
+.one {
+  background-image: url(/Users/kofizeri/Desktop/VScode/wincblog_wordpress/public/Group 50.png);
+  object-fit: cover;
+  background-size: 110%;
+  position: relative;
+}
+
+.one::after {
+  content: "Web team";
+  color: rgba(0, 0, 0, 0.15);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
+}
+
+.two {
+  background-image: url(/Users/kofizeri/Desktop/VScode/wincblog_wordpress/public/Group 51.png);
+  object-fit: cover;
+  background-size: 110%;
+  position: relative;
+}
+
+.two::after {
+  content: "Application team";
+  color: rgba(0, 0, 0, 0.15);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
+}
+
+.three {
+  background-image: url(/Users/kofizeri/Desktop/VScode/wincblog_wordpress/public/Group 50.png);
+  object-fit: cover;
+  background-size: 110%;
+  position: relative;
+}
+
+.three::after {
+  content: " Competitive programming team";
+  color: rgba(0, 0, 0, 0.15);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
+}
+
+.four {
+  background-image: url(/Users/kofizeri/Desktop/VScode/wincblog_wordpress/public/Group 51.png);
+  object-fit: cover;
+  background-size: 110%;
+  position: relative;
+}
+
+.four::after {
+  content: "Hackathons works";
+  color: rgba(0, 0, 0, 0.15);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
+}
+
+.five {
+  background-image: url(/Users/kofizeri/Desktop/VScode/wincblog_wordpress/public/Group 50.png);
+  object-fit: cover;
+  background-size: 110%;
+  position: relative;
+}
+
+.five::after {
+  content: "Others";
+  color: rgba(0, 0, 0, 0.15);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
 }
 
 .team_name {
@@ -289,4 +404,59 @@ h4::before {
   width: 100%;
   max-width: 650px;
 }
+
+footer {
+    width: 100%;
+    height: 217px;
+    border: 1px solid #3AD6B2;
+    background: #3AD6B2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  footer p {
+    margin: 0;
+    color: #232428;
+    text-align: center;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%; /* 31.014px */
+    letter-spacing: 3.6px;
+  }
+
+  footer span a {
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%;
+    letter-spacing: 3.6px;
+    text-decoration: none;
+    position: relative;
+  }
+
+  footer span a::after {
+    position: absolute;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #000000;
+    bottom: 0px; /*アンダーラインが現れ始める位置（aタグの下辺からの高さ）*/
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  footer span a:hover::after {
+    visibility: visible;
+    bottom: 2px;
+    opacity: 1;
+  }
+
 
