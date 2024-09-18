@@ -51,15 +51,55 @@ const postTitle = post.title.rendered;
 const postContent = post.content.rendered;
 const postDate = post.date;
 
+type Category = {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+};
+let postCategory: string[] =[];
+
+// const categoryId = post.categories.length > 0 ? post.categories[0] : null;
+// let categoryName = '';
+
+// if (categoryId) {
+//   categoryName = await getCategoryName(categoryId);
+// }
 ---
 
 <Layout title={postTitle}>
   <main>
+
+    <div class="without_header">
+      <p class="guide"><a href="http://localhost:4321">home</a> > <a href="http://localhost:4321">blog</a> > <a href="http://localhost:4321/${postCategory}">Web team</a> > <a href="http://localhost:4321/${postId}">{postTitle}</a></p>
+      <p class="slug">{postCategory}</p>
+      <div class="Title_and_body">
+        <div class="Title_box">
+          <span></span>
+          <h2>{postDate.substring(0,4)}.{postDate.substring(5,7)}.{postDate.substring(8,10)}</h2>
+          <h1>{postTitle}</h1>
+          <div class="Title_box_background"></div>
+        </div>
+        <article class="article">
+          <div class="article_content" set:html={postContent}></div>
+        </article>
+        <div class="under_botton">
+          <a class="before_article"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M16 22L6 12L16 2l1.775 1.775L9.55 12l8.225 8.225z"/></svg></a>
+          <a class="botton_for_home"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20V4h16v16zm1-1h14V5H5z"/></svg></a>
+          <a class="next_article"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M8.025 22L6.25 20.225L14.475 12L6.25 3.775L8.025 2l10 10z"/></svg></a>
+        </div>
+      </div>
+      <footer>
+        <p>© 2024 Copyright: <span><a>コンピュータ研究会・WINC</a></span></p>
+      </footer>
+    </div>
+
     <h1>{postTitle}</h1>
     <h2>{categoryName}</h2>
     <p>投稿日: {postDate.substring(0,4)}年{postDate.substring(5,7)}月{postDate.substring(8,10)}日</p>
     <p>カテゴリ: {categoryName}</p>
     <div set:html={postContent}></div>
+
   </main>
 
   <script>
@@ -86,43 +126,293 @@ const postDate = post.date;
 </Layout>
 
 <style>
-  main {
-    margin: auto;
-    padding: 1em;
-    max-width: 60ch;
-    text-align: center;
-  }
-  h1 {
-    font-size: 40px;
-    text-align: center;
-    color: black;
-  }
   p {
-    font-size: 20px;
-    text-align: center;
-    color: black;
+    margin: 0;
   }
+
+  main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  body {
+    margin:0;
+  }
+
+  .guide {
+    text-align: left;
+    margin: 0;
+    margin-left: 29px;
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .guide a{
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .Title_and_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Title_box {
+    width: 894px;
+    height: 162px;
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: relative;
+  }
+
+  .Title_box_background {
+    position: absolute;
+    background: rgba(169, 238, 222, 0.20);
+    filter: blur(14.25px);
+    width: 894px;
+    height: 162px;
+  }
+
+  .Title_box::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 203px;
+    background: rgba(58, 214, 178, 0.20);
+    top: 43px;
+    right: calc(100% + 153px);
+  }
+
+  .Title_box span::before {
+    content: "";
+    position: absolute;
+    width: 298px;
+    height: 12px;
+    background: rgba(58, 214, 178, 0.20);
+    top: calc(100% + 34px);
+    right: calc(100% - 95px);
+  }
+
+  .Title_box::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 203px;
+    background: rgba(58, 214, 178, 0.20);
+    top: -84px;
+    left: calc(100% + 141px);
+  }
+
+  .Title_box span::after {
+    content: "";
+    position: absolute;
+    width: 298px;
+    height: 12px;
+    background: rgba(58, 214, 178, 0.20);
+    top: -34px;
+    left: calc(100% - 95px);
+  }
+
+  .Title_box h1 {
+    color: #232428;
+    text-align: center;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .Title_box h2 {
+    margin: 0;
+    color: #878787;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 4.8px; 
+  }
+
+  .article {
+    margin-top: 130px;
+    width: 75%;
+  }
+
+  .article_content {
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 230%; /* 55.2px */
+  }
+
+  .article_content img {
+    position: relative;
+  }
+  .article_content img ::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 17px;
+    left: 25px;
+  }
+
+  .under_botton {
+    width: 75%;
+    margin: 30px 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .under_botton a {
+    text-align: left;
+    margin: 0;
+    margin-left: 29px;
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .before_article {
+    position: relative;
+  }
+
+  .before_article::after {
+    content: "一つ前の記事に戻る";
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    left: calc(100%+10px);
+  }
+
+  .before_article::after:hover {
+    visibility: visible;
+  }
+
+  .botton_for_home {
+    position: relative;
+  }
+
+  .botton_for_home::after {
+    content: "{postCategory}チームのトップに戻る";
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    left: calc(100%+10px);
+  }
+
+  .botton_for_home::after:hover {
+    visibility: visible;
+  }
+
+  .next_article {
+    position: relative;
+  }
+
+  .next_article::after {
+    content: "次の記事に戻る";
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    left: calc(100%+10px);
+  }
+
+  .next_article::after:hover {
+    visibility: visible;
+  }
+
+  footer {
+    width: 100%;
+    height: 217px;
+    border: 1px solid #3AD6B2;
+    background: #3AD6B2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  footer p {
+    margin: 0;
+    color: #232428;
+    text-align: center;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%; /* 31.014px */
+    letter-spacing: 3.6px;
+  }
+
+  footer span a {
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%;
+    letter-spacing: 3.6px;
+  }
+
   img {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
   }
+
   ul {
     padding: 0;
     list-style-type: none;
     text-align: center;
   }
+
   li {
     margin-bottom: 10px;
   }
+
   a {
     font-size: 20px;
     color: black;
     text-decoration: none;
     font-weight: 600;
+    position: relative;
   }
-  a:hover {
-    background: rgb(179, 179, 239);
+
+  a::after {
+    position: absolute;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #000000;
+    bottom: 0px; /*アンダーラインが現れ始める位置（aタグの下辺からの高さ）*/
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  a:hover::after {
+    visibility: visible;
+    bottom: 2px;
+    opacity: 1;
   }
 </style>
