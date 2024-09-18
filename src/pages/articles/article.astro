@@ -195,20 +195,20 @@ const allArticles: Article[] = ((await Promise.all(Resusers.map((user) => fetchA
   }
 
   .detail {
-    text-decoration: none;  /* デフォルトの下線を削除 */
+    text-decoration: none;  
     color: white;
-    position: relative;     /* 擬似要素を相対配置するために必要 */
+    position: relative;     
 }
 
 .detail:hover {
-    text-decoration: none;  /* ホバー時のデフォルト下線を抑制 */
+    text-decoration: none; 
 }
 
 .detail::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -2px;           /* 下線を少し離して表示 */
+    bottom: -2px;           
     width: 100%;
     height: 2px;
     background-color: transparent;
@@ -216,7 +216,7 @@ const allArticles: Article[] = ((await Promise.all(Resusers.map((user) => fetchA
 }
 
 .detail:hover::after {
-    background-color: white;  /* ホバー時に白の下線が表示 */
+    background-color: white; 
 }
 
 
