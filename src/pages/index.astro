@@ -8,49 +8,262 @@ type Category = {
   slug: string;
 };
 
+
 const response = await fetch('http://test.local/wp-json/wp/v2/categories');
 const categories: Category[] = await response.json();
 ---
-
 <Layout title="wincblog">
+  <div class="header">
+    <div class="headertext">
+      <h1 class="title">WINCBLOG</h1>
+      <div class="content_width">
+        <div>
+      <h2>WINCブログ</h2>
+      <p class="explanation">コンピュータサークル「WINC」の活動記録。</p>
+    </div>
+    <img src="./LINE_ALBUM_春合宿写真_240229_119 1.png" alt="" class="pixture1">
+  </div>
+  <img src="./LINE_ALBUM_春合宿写真_240229_119 2.png" alt="" class="pixture2">
+ </div>
   <main>
-    <ul>
-      {categories.map((category) => (
-        <li key={category.id}>
-          <a href={`/${category.slug}`}>{category.name}</a>
-        </li>
-      ))}
-    </ul>
+    <div class="category">
+      <div class="text">
+        <h1 class="number">01</h1>
+        <div class="left">
+        <h3></h3>
+          <a href="./web" class="team_name">Web team</a>
+        </div>
+      </div>
+      <img src="./web.png" alt="" class="right_one">
+    </div>
+
+    <div class="category">
+      <div class="text">
+        <h1 class="number">02</h1>
+        <div class="Pseudo-elements">
+        <h3></h3>
+        <a href="./app" class="team_name">App team</a>
+        </div>
+      </div>
+      <img src="./app.png" alt="" class="right_one">
+    </div>
+
+    <div class="category">
+      <div class="text">
+      <h1 class="number">03</h1>
+      <div class="left">
+      <h3></h3>
+      <a href="./competitive_programming" class="team_name">競プロ班</a>
+      </div>
+      </div>
+      <img src="./competitive.png" alt="" class="right_one">
+    </div>
+
+    <div class="category">
+      <div class="text">
+      <h1 class="number">04</h1>
+      <div class="Pseudo-elements">
+      <h3></h3>
+      <a href="./hackathon"class="team_name">hackathonの作品</a>
+      </div>
+      </div>
+      <img src="./hackathon.png" alt="" class="right_one">
+    </div>
+
+
+
+    <div class="category">
+      <div class="text">
+      <h1 class="number">05</h1>
+      <div class="left">
+      <h3></h3>
+      <a href="./other" class="team_name">サークル外の活動</a>
+      </div>
+      </div>
+      <img src="./other.png" alt="" class="right_one">
+    </div>
   </main>
 </Layout>
 
 <style>
-  main {
-    margin: auto;
-    padding: 1em;
-    max-width: 60ch;
-    background-color: white;
+  .text{
+    width: 650px;
   }
-  h1 {
-    font-size: 40px;
-    text-align: center;
-    color: black;
-  }
-  ul {
-    padding: 0;
-    list-style-type: none;
-    text-align: center;
-  }
-  li {
-    margin-bottom: 10px;
-  }
-  a {
-    font-size: 20px;
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  a:hover {
-    background: rgb(179, 179, 239);
-  }
-</style>
+ .content_width {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.main {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+body {
+  margin: 0;
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.40);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Zen Kaku Gothic New";
+  font-size: 150px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  position: absolute;
+  top: -50px;
+}
+
+h1 {
+  margin-left: 20px;
+}
+
+h2 {
+  color: #0E3E81;
+  font-family: "Zen Kaku Gothic New";
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  position: absolute;
+  margin-top: 260px;
+  margin-left: 0px;
+}
+
+.explanation {
+  color: #000;
+  font-family: "Zen Kaku Gothic New";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 350px;
+  width: 620px;
+}
+
+a {
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.header {
+  position: relative;
+}
+
+p {
+  position: absolute;
+  color: #0E3E81;
+  font-family: "Zen Kaku Gothic New";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.pixture1 {
+  position: absolute;
+  float: right;
+  right: 0;
+  overflow: visible;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  z-index: 2;
+}
+
+.pixture2 {
+  position: relative;
+  float: right;
+  margin-right: 40px;
+  padding-top: 63px;
+  overflow: visible;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.number {
+  color: rgba(0, 0, 0, 0.60);
+  font-family: "Avenir Next";
+  font-size: 100px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.right_one {
+  padding-left: 150px;
+  margin-top: 44px;
+  width: 400px;
+  object-fit: contain;
+}
+
+.left_one {
+  padding-left: 150px;
+  margin-top: 44px;
+  width: 400px;
+  object-fit: contain;
+}
+
+.category {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  height: 340px;
+  flex-shrink: 0;
+  margin: 0 auto;
+  padding: 20px 20px 20px 0px;
+  box-sizing: border-box;
+}
+
+.team_name {
+  color: #0E3E81;
+  font-family: "Zen Kurenaido";
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 160px;
+}
+
+h3 {
+  position: relative;
+  display: inline-block;
+}
+
+h3::before {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 3px;
+  background-color: #0E3E81;
+  position: absolute;
+  top: 0;
+  left: 0px;
+}
+
+h4 {
+  position: relative;
+  display: inline-block;
+}
+
+h4::before {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 3px;
+  background-color: #0E3E81;
+  position: absolute;
+  top: 0;
+  left: 1200px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 650px;
+}
