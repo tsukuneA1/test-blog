@@ -93,13 +93,6 @@ let postCategory: string[] =[];
         <p>© 2024 Copyright: <span><a>コンピュータ研究会・WINC</a></span></p>
       </footer>
     </div>
-
-    <h1>{postTitle}</h1>
-    <h2>{categoryName}</h2>
-    <p>投稿日: {postDate.substring(0,4)}年{postDate.substring(5,7)}月{postDate.substring(8,10)}日</p>
-    <p>カテゴリ: {categoryName}</p>
-    <div set:html={postContent}></div>
-
   </main>
 
   <script>
