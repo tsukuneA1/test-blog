@@ -68,8 +68,10 @@ export type Article = {
 
 export type User = {
   userName: string;
-  imgSrc: string;
+  userImgSrc: string;
   introduction: string;
   zennId: string;
   qiitaId: string;
+  gitUrl: string;
+  XUrl: string;
 }
