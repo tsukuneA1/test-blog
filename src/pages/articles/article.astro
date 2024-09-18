@@ -1,6 +1,5 @@
 ---
 import type { Article, QiitaItemResponse, User} from "../../types";
-import { users } from "../../users";
 import type { ZennPost } from "../../types";
 import ArticleComponent from "./articleComponent.astro";
 import Header from "../../components/Header/header.astro";
@@ -257,7 +256,7 @@ const allArticles: Article[] = ((await Promise.all(Resusers.map((user) => fetchA
       <div class="container">
         <h1>Members</h1>
         <div class="users-container">
-          {users.map((user) => (
+          {Resusers.map((user) => (
             <a href={(`/articles/user/${user.userName}`)}>
             <div class="user-card w-40 h-60">
               <img src={user.userImgSrc} alt={`${user.userName}'s avatar`} />
