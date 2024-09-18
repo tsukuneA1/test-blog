@@ -139,13 +139,13 @@ const allArticles: Article[] = ((await fetchAllArticles(props, import.meta.env.Q
   <head>
     <meta charset="UTF-8">
   </head>
-  <body style="display: block;">
+  <body style="display: block; padding: 0; margin: 0;">
     <Header/>
     <div class="content">
       <div class="container">
         <div class="profile-section">
           <Image
-            src={props.imgSrc}
+            src={props.userImgSrc}
             width={100}
             height={100}
             alt="User profile image"
