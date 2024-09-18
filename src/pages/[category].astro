@@ -59,108 +59,271 @@ if (categoryId) {
 
 <Layout title="wincblog">
   <main>
-    <h1>{categoryName}</h1>
-
-    <div class="carousel">
-      <figure>
-        <img src="web/picture1.jpg" alt="">
-        <img src="web/picture2.jpg" alt="">
-        <img src="web/picture3.jpg" alt="">
-        <img src="web/picture4.jpg" alt="">
-        <img src="web/picture5.jpg" alt="">
-      </figure>
+    <p class="guide"><a href="http://localhost:4321">home</a> > <a href="http://localhost:4321">blog</a> > <a href={'http://localhost:4321/${categoryId}'}>Web team</a></p>
+    <div class="eye-catch">
+      <h1>{categoryName}</h1>
+      <div class="carousel">
+        <figure>
+          <img src="web/picture1.jpg" alt="">
+          <img src="web/picture2.jpg" alt="">
+          <img src="web/picture3.jpg" alt="">
+          <img src="web/picture4.jpg" alt="">
+          <img src="web/picture5.jpg" alt="">
+        </figure>
+      </div>
+      <script>
+        const carousel = document.querySelector('.carousel figure');
+        let currentAngle = 0;
+        const rotationStep = 72; // 各画像の回転角度 (360度 / 5枚 = 72度)
+        const totalImages = 5; // カルーセルにある画像の枚数
+      
+        document.addEventListener('click', (e) => {
+          const viewportWidth = window.innerWidth;
+      
+          if (e.clientX < viewportWidth / 2) {
+            // 画面の左半分をクリックしたとき
+            currentAngle += rotationStep; // 左に回転
+          } else {
+            // 画面の右半分をクリックしたとき
+            currentAngle -= rotationStep; // 右に回転
+          }
+      
+          // 回転を適用し、連続してクリックしても続けて回転するようにする
+          carousel.style.transform = `rotateY(${currentAngle}deg)`;
+        });
+      
+      </script>
     </div>
-    <script>
-      const carousel = document.querySelector('.carousel figure');
-      let currentAngle = 0;
-      const rotationStep = 72; // 各画像の回転角度 (360度 / 5枚 = 72度)
-      const totalImages = 5; // カルーセルにある画像の枚数
-    
-      document.addEventListener('click', (e) => {
-        const viewportWidth = window.innerWidth;
-    
-        if (e.clientX < viewportWidth / 2) {
-          // 画面の左半分をクリックしたとき
-          currentAngle += rotationStep; // 左に回転
-        } else {
-          // 画面の右半分をクリックしたとき
-          currentAngle -= rotationStep; // 右に回転
-        }
-    
-        // 回転を適用し、連続してクリックしても続けて回転するようにする
-        carousel.style.transform = `rotateY(${currentAngle}deg)`;
-      });
-    
-    </script>
-    
-    
-    
-    {postTitles.length > 0 ? (
-      <ul>
-        {postTitles.map((postTitle, index) => {
-          const year = postDates[index].substring(0, 4);
-          const month = postDates[index].substring(5, 7);
-          const date = postDates[index].substring(8, 10);
-          const postId = postIds[index];
-          const content = posts[index].content.rendered.substring(4, 26);
-       
 
-          return (
-            <li key={index}>
-              <div class="blog">
-                <div class="picture">
-                  <a href={`./${postIds[index]}`}>
-                  <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image"/>
-                  </a>
-                </div>
-                <div class="post">
-                  <a href={`./${postIds[index]}`} class="title">{postTitle}</a>
-                  <p class="date">投稿日: {year}年{month}月{date}日</p>
-                  <div class="ex">
-                  <p class="explanation">{content}・・・</p>
-                  <a href={`./${postIds[index]}`} class="tsuzuki">続きはこちら</a>
+    <div class="New_articles">
+      {postTitles.length > 0 ? (
+        <ul>
+          {postTitles.map((postTitle, index) => {
+            const year = postDates[index].substring(0, 4);
+            const month = postDates[index].substring(5, 7);
+            const date = postDates[index].substring(8, 10);
+            const postId = postIds[index];
+            const content = posts[index].content.rendered.substring(4, 26);
+        
+
+            return (
+              <li key={index}>
+                <div class="blog">
+                  <div class="picture">
+                    <a href={`./${postIds[index]}`}>
+                    <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image"/>
+                    </a>
+                  </div>
+                  <div class="article_sepalate_line"></div>
+                  <div class="post">
+                    <a href={`./${postIds[index]}`} class="title">{postTitle}</a>
+                    <p class="date">投稿日: {year}年{month}月{date}日</p>
+                    <p class="explanation">{content}・・・</p>
+                    <div class="tsuzuki_botton">
+                      <a href={`./${postIds[index]}`} class="tsuzuki">続きを読む</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    ) : (
-      <p>投稿がありません</p>
-    )}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p>投稿がありません</p>
+      )}
+    </div>
+    <footer>
+      <p>© 2024 Copyright: <span><a>コンピュータ研究会・WINC</a></span></p>
+    </footer>
   </main>
 </Layout>
 
 <style>
+  body {
+    margin: 0;
+    background-image: url(public/Group 48.png);
+    background-size: 101%;
+    background-position: -22px 70px;
+  }
+
+
+  .guide {
+    text-align: left;
+    margin: 0;
+    margin-left: 29px;
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+
+  .guide a{
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .guide a::after {
+    position: absolute;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #000000;
+    bottom: 0px; /*アンダーラインが現れ始める位置（aタグの下辺からの高さ）*/
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  .guide a:hover::after {
+    visibility: visible;
+    bottom: 2px;
+    opacity: 1;
+  }
+
+  .eye-catch {
+    width: 100%;
+    position: relative;
+  }
+
+  .eye-catch::after {
+    content: "Web team";
+    width: 734px;
+    height: 173px;
+    color: rgba(0, 0, 0, 0.15);
+    font-family: "Zen Kaku Gothic New";
+    font-size: 150px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: left;
+    position: absolute;
+    bottom: -161px;
+    left: 27px;
+  }
+
   h1{
+    text-align: center;
     color: #0E3E81;
     font-family: "Zen Kurenaido";
     font-size: 128px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    position: relative;
+    z-index: 5 !important;
+  }
+
+  h1::before {
+    content: "";
+    width: 504px;
+    height: 98px;
+    background: #FFF;
+    filter: blur(10px);
+    position: absolute;
+    z-index: -1 !important;
+    top: 55px;
   }
 
   .post-image {
-    width: 200px;
-    height: 200px;
-    flex-shrink: 0;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
   }
 
   .blog {
     margin-bottom: 20px; 
     display: flex;
-    justify-content: center;
-    margin: 0 auto;
+    justify-content: left;
+    width: 959px;
+    height: 200px;
+    border: 1px solid #000;
+    background: #FFF;
+    position: relative;
+  }
+
+  .tsuzuki_botton {
+    position: absolute;
+    bottom: 19px;
+    right: 32px;
+  }
+
+  .tsuzuki {
+    color: #00A780;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 3.2px;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .tsuzuki::after {
+    position: absolute;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #00A780;
+    bottom: 0px; /*アンダーラインが現れ始める位置（aタグの下辺からの高さ）*/
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  .tsuzuki:hover::after {
+    visibility: visible;
+    bottom: 2px;
+    opacity: 1;
   }
 
   main {
-    margin:auto;
-    max-width: 80%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
+
+  .New_articles {
+    position: relative;
+    margin-top: 307px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .New_articles::before {
+    content: "";
+    width: 100vw;
+    border: #000 1px solid;
+    position: absolute;
+    top: -112.84px;
+  }
+
+  .New_articles::after {
+    content:"New Articles";
+    color: #0E3E81;
+    background-color: #FFF;
+    width: 288px;
+    text-align: center;
+    font-family: "Zen Kurenaido";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: -150px; 
+  }
+
+
 
   ul {
     padding: 0;
@@ -173,15 +336,21 @@ if (categoryId) {
 
   .title {
     color: #232428;
+    font-family: "Zen Kaku Gothic New";
     font-size: 32px;
     font-style: normal;
     font-weight: 300;
     line-height: normal;
     letter-spacing: 6.4px;
     text-decoration: none;
+    margin-top: 13px;
   }
 
   p{
+    margin: 0;
+  }
+
+  .date {
     color: #232428;
     font-family: "Zen Kaku Gothic New";
     font-size: 16px;
@@ -189,77 +358,142 @@ if (categoryId) {
     font-weight: 300;
     line-height: normal;
     letter-spacing: 3.2px;
+    margin: 12px 0px 6px 0px;
   }
 
-  a:hover {
-    background: rgb(179, 179, 239);
+  .explanation {
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 4px;
   }
+
+  .article_sepalate_line {
+    width: 1px;
+    height: 142px;
+    background: #949494;
+    margin-right: 29px;
+  }
+
   .post{
-    width: 759px;
-    height: 200px;
-    flex-shrink: 0;
-    border: 1px solid #000;
-    background: #FFF;
+    text-align: left;
+    padding-top: 13px;
   }
+
   .picture{
-    width: 200px;
-    height: 200px;
-    flex-shrink: 0;
-    border: 1px solid #000;
-    background: #FFF;
+    margin: 7px;
   }
+
+  footer {
+    width: 100%;
+    height: 217px;
+    border: 1px solid #3AD6B2;
+    background: #3AD6B2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  footer p {
+    margin: 0;
+    color: #232428;
+    text-align: center;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%; /* 31.014px */
+    letter-spacing: 3.6px;
+  }
+
+  footer span a {
+    color: #232428;
+    font-family: "Zen Kaku Gothic New";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 172.3%;
+    letter-spacing: 3.6px;
+    text-decoration: none;
+    position: relative;
+  }
+
+  footer span a::after {
+    position: absolute;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #000000;
+    bottom: 0px; /*アンダーラインが現れ始める位置（aタグの下辺からの高さ）*/
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  footer span a:hover::after {
+    visibility: visible;
+    bottom: 2px;
+    opacity: 1;
+  }
+
+
   .carousel {
-  padding: 20px;
-  perspective: 500px;
-  overflow: hidden;
+    padding: 20px;
+    perspective: 500px;
+    overflow: hidden;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.carousel > * {
-  flex: 0 0 auto;
-}
+  .carousel > * {
+    flex: 0 0 auto;
+  }
 
-.carousel figure {
-  margin: 0;
-  width: 400px; 
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
-  transform-origin: 50% 50% -482.84px;
-}
+  .carousel figure {
+    margin: 0;
+    width: 400px; 
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    transform-origin: 50% 50% -482.84px;
+  }
 
-.carousel img {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 40px; 
-  opacity: 0.9; 
-}
+  .carousel img {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 40px; 
+    opacity: 0.9; 
+  }
 
-.carousel img:not(:first-of-type) {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 50% 50% -482.84px;
-}
+  .carousel img:not(:first-of-type) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 50% 50% -482.84px;
+  }
 
 
-/* Rotating images based on their positions */
-.carousel img:nth-child(2) {
-  transform: rotateY(1.256rad); 
-}
+  /* Rotating images based on their positions */
+  .carousel img:nth-child(2) {
+    transform: rotateY(1.256rad); 
+  }
 
-.carousel img:nth-child(3) {
-  transform: rotateY(2.512rad); 
-}
+  .carousel img:nth-child(3) {
+    transform: rotateY(2.512rad); 
+  }
 
-.carousel img:nth-child(4) {
-  transform: rotateY(3.768rad); 
-}
+  .carousel img:nth-child(4) {
+    transform: rotateY(3.768rad); 
+  }
 
-.carousel img:nth-child(5) {
-  transform: rotateY(5.024rad); 
-}
+  .carousel img:nth-child(5) {
+    transform: rotateY(5.024rad); 
+  }
 
 </style>
