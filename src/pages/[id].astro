@@ -11,7 +11,19 @@ type Post = {
     rendered: string;
   };
   date: string;
+  categories: number[]; 
 };
+
+type Category = {
+  id: number;
+  name: string;
+};
+
+async function getCategoryName(categoryId: number): Promise<string> {
+  const response = await fetch(`http://test.local/wp-json/wp/v2/categories/${categoryId}`);
+  const category: Category = await response.json();
+  return category.name;
+}
 
 export async function getStaticPaths() {
   const response = await fetch('http://test.local/wp-json/wp/v2/posts');
@@ -27,6 +39,13 @@ export async function getStaticPaths() {
 const postId = Astro.params.id;
 const response = await fetch(`http://test.local/wp-json/wp/v2/posts/${postId}`);
 const post: Post = await response.json();
+
+const categoryId = post.categories.length > 0 ? post.categories[0] : null;
+let categoryName = '';
+
+if (categoryId) {
+  categoryName = await getCategoryName(categoryId);
+}
 
 const postTitle = post.title.rendered;
 const postContent = post.content.rendered;
@@ -50,6 +69,7 @@ let postCategory: string[] =[];
 
 <Layout title={postTitle}>
   <main>
+
     <div class="without_header">
       <p class="guide"><a href="http://localhost:4321">home</a> > <a href="http://localhost:4321">blog</a> > <a href="http://localhost:4321/${postCategory}">Web team</a> > <a href="http://localhost:4321/${postId}">{postTitle}</a></p>
       <p class="slug">{postCategory}</p>
@@ -73,6 +93,13 @@ let postCategory: string[] =[];
         <p>© 2024 Copyright: <span><a>コンピュータ研究会・WINC</a></span></p>
       </footer>
     </div>
+
+    <h1>{postTitle}</h1>
+    <h2>{categoryName}</h2>
+    <p>投稿日: {postDate.substring(0,4)}年{postDate.substring(5,7)}月{postDate.substring(8,10)}日</p>
+    <p>カテゴリ: {categoryName}</p>
+    <div set:html={postContent}></div>
+
   </main>
 
   <script>
