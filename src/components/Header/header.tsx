@@ -25,7 +25,7 @@ useEffect(() => {
         <head>
             <meta charSet="UTF-8"/>
         </head>
-        <body>
+        <body style={{borderBottom:'1px solid black'}}>
         <div className="justify-between w-full" style={{display:"flex", backgroundColor:"white", padding: `${padding}`, justifyContent: "space-between"}}>
             <div style={{display: 'flex'}}>
                 <div>
