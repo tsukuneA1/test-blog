@@ -20,11 +20,11 @@ type Post = {
 };
 
 
-const response = await fetch('https://public-api.wordpress.com/wp/v2/sites/wincblogs.wordpress.com/categories');
+const response = await fetch('https://public-api.wordpress.com/wp/v2/sites/wincblog.wordpress.com/categories');
 const categories: Category[] = await response.json();
 
 export async function getStaticPaths() {
-  const response = await fetch('https://public-api.wordpress.com/wp/v2/sites/wincblogs.wordpress.com/categories');
+  const response = await fetch('https://public-api.wordpress.com/wp/v2/sites/wincblog.wordpress.com/categories');
   const categories: Category[] = await response.json();
 
   return categories.map((category) => ({
@@ -47,7 +47,7 @@ let postDates: string[] = [];
 
 
 if (categoryId) {
-  const postsResponse = await fetch(`https://public-api.wordpress.com/wp/v2/sites/wincblogs.wordpress.com/posts?categories=${categoryId}`);
+  const postsResponse = await fetch(`https://public-api.wordpress.com/wp/v2/sites/wincblog.wordpress.com/posts?categories=${categoryId}`);
   posts = await postsResponse.json();
 
   postTitles = posts.map(post => post.title.rendered);
@@ -71,7 +71,7 @@ if (categoryId) {
           <img src="web/picture5.jpg" alt="">
         </figure>
       </div>
-      <script defer>
+      <script>
         const carousel = document.querySelector('.carousel figure');
         let currentAngle = 0;
         const rotationStep = 72; // 各画像の回転角度 (360度 / 5枚 = 72度)
@@ -89,7 +89,7 @@ if (categoryId) {
           }
       
           // 回転を適用し、連続してクリックしても続けて回転するようにする
-          carousel.style.transform = `rotateY(${currentAngle}deg)`;
+          // carousel.style.transform = `rotateY(${currentAngle}deg)`;
         });
       
       </script>
@@ -111,7 +111,7 @@ if (categoryId) {
                 <div class="blog">
                   <div class="picture">
                     <a href={`./${postIds[index]}`}>
-                    <img src={`https://wincblogs.wordpress.com/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image"/>
+                    <img src={`http://test.local/wp-content/uploads/${year}/${month}/${postId}.jpg`} alt={postTitle} class="post-image"/>
                     </a>
                   </div>
                   <div class="article_sepalate_line"></div>

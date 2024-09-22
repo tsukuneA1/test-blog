@@ -1,0 +1,154 @@
+---
+import type { Article } from "../../types";
+import Image from "astro/components/Image.astro";
+const props = Astro.props as Article;
+
+const published = new Date(props.published_at);
+const updated = new Date(props.updated_at);
+---
+
+<style>
+    .top_container {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        background-color: #3f3f46;
+        color: white;
+        padding: 20px;
+        width: 100%; 
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .block {
+        display: block;
+    }
+
+    .rounded-md {
+        border-radius: 0.375rem; /* rounded-md */
+    }
+
+    .ml-2 {
+        margin-left: 0.5rem; /* ml-2 */
+    }
+
+    .text-lg {
+        font-size: 1.125rem; /* text-lg */
+        color: white;
+    }
+
+    .text-xl {
+        font-size: 1.25rem; /* text-xl */
+    }
+
+    .my-5 {
+        margin-top: 1.25rem; /* my-5 */
+        margin-bottom: 1.25rem; /* my-5 */
+    }
+
+    .h-20 {
+        height: 7rem; /* h-20 */
+    }
+
+    .inline-block {
+        display: inline-block;
+    }
+
+    .mr-2 {
+        margin-right: 0.5rem;
+    }
+
+    .text-zinc-400 {
+        color: #a1a1aa; 
+    }
+
+    .container {
+        display: flex;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .rounded-circle {
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .marginY {
+        margin: 10px 0;
+    }
+
+    .items-center {
+        display: flex;
+        align-items: flex-end; 
+        justify-items: end;
+        margin-bottom:auto;
+    }
+
+    h1 {
+        color:white;
+        text-decoration: none;
+        border:none;
+        text-align: start;
+    }
+    
+</style>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="top_container">
+            <div class="flex">
+                <a href={(`/articles/user/${props.user.userName}`)}>
+                    <Image
+                    src={props.user.userImgSrc}
+                    width={50}
+                    height={50}
+                    alt=""
+                    class="rounded-md"
+                />
+            </a>
+                
+                <div class="block ml-2">
+                    <a class="text-lg" href={(`/articles/user/${props.user.userName}`)}>
+                        {props.user.userName}
+                    </a>
+                    
+                    <div class="flex text-zinc-400">
+                        {(`${published.getFullYear()}.${String(published.getMonth() + 1).padStart(2, '0')}.${String(published.getDate()).padStart(2, '0')}`)}
+                        {published.getTime() < updated.getTime()
+                            ? <div class="container" style="margin-left: 10px; display:flex; align-items: center;">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"></path></svg>
+                                {(`${updated.getFullYear()}.${String(updated.getMonth() + 1).padStart(2, '0')}.${String(updated.getDate()).padStart(2, '0')}`)}
+                                </div>
+                            : <></>
+                        }
+                    </div>
+                    
+                </div>
+            </div>
+            <a href={props.classification === 'zenn.dev' ? (`https://zenn.dev${props.articleUrl}`) : props.articleUrl} class="my-5 h-20 inline-block">
+                <h1 style="width: auto;" class="text-xl">{props.title}</h1>
+            </a>
+        
+            <div class="items-center" style="display: flex; align-items: center;">
+                <Image
+                    src={(props.classification === 'zenn.dev' ? '/zenn.png' : props.classification === 'qiita.com' ? '/qiita.png' : '/favicon.svg')}
+                    width={20}
+                    height={20}
+                    alt=""
+                    class="rounded-md mr-2"
+                />
+                <div class="text-zinc-400">
+                    {props.classification}
+                </div>
+                
+            </div>
+        </div>
+        
+    </body>
+</html>

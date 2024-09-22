@@ -7,7 +7,7 @@
       <img src="/web/picture5.jpg" alt="">
     </figure>
   </div>
-  <script defer>
+  <script>
     const carousel = document.querySelector('.carousel figure');
     let currentAngle = 0;
     const rotationStep = 72; 
@@ -25,7 +25,7 @@
       }
   
       // 回転を適用し、連続してクリックしても続けて回転するようにする
-      carousel.style.transform = `rotateY(${currentAngle}deg)`;
+      // carousel.style.transform = `rotateY(${currentAngle}deg)`;
     });
   
   </script>
